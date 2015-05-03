@@ -26,45 +26,45 @@
 
 // TODO: Implement resize!
 
-ofxShivaVGRenderer::ofxShivaVGRenderer ()
+ofxShivaVGRenderer::ofxShivaVGRenderer () : ofGLRenderer(ofGetWindowPtr())
 {
    	_vg.create(ofGetWidth(), ofGetHeight());
 }
 
-void ofxShivaVGRenderer::setLineCapStyle(VGCapStyle cap)
+void ofxShivaVGRenderer::setLineCapStyle(VGCapStyle cap) const
 {
     _vg.setStrokeCapStyle(cap);
 }
 
-void ofxShivaVGRenderer::setLineJoinStyle(VGJoinStyle join)
+void ofxShivaVGRenderer::setLineJoinStyle(VGJoinStyle join) const
 {
     _vg.setStrokeJoinStyle(join);
 }
 
-VGCapStyle ofxShivaVGRenderer::getLineCapStyle()
+VGCapStyle ofxShivaVGRenderer::getLineCapStyle() const
 {
     return _vg.getStrokeCapStyle();
 }
 
-VGJoinStyle ofxShivaVGRenderer::getLineJoinStyle()
+VGJoinStyle ofxShivaVGRenderer::getLineJoinStyle() const
 {
     return _vg.getStrokeJoinStyle();
 }
 
-void ofxShivaVGRenderer::background(const ofColor & c)
+void ofxShivaVGRenderer::background(const ofColor & c) const
 {
     _bgColor = c;
 	glClearColor(_bgColor[0],_bgColor[1],_bgColor[2], _bgColor[3]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void ofxShivaVGRenderer::clear(float r, float g, float b, float a)
+void ofxShivaVGRenderer::clear(float r, float g, float b, float a) const
 {
 	glClearColor(r / 255., g / 255., b / 255., a / 255.);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void ofxShivaVGRenderer::clear(float brightness, float a)
+void ofxShivaVGRenderer::clear(float brightness, float a) const
 {
 	clear(brightness, brightness, brightness, a);
 }
@@ -74,7 +74,7 @@ void ofxShivaVGRenderer::clear(float brightness, float a)
 // DRAWING
 // --------------------------------------------
 
-void ofxShivaVGRenderer::draw(ofPolyline & poly)
+void ofxShivaVGRenderer::draw(const ofPolyline & poly) const
 {
 	ofStyle style = ofGetStyle();
     
@@ -84,11 +84,11 @@ void ofxShivaVGRenderer::draw(ofPolyline & poly)
     
     simpleVGPath p;
     
-    vector<ofVec3f> &verts = poly.getVertices();
+    const vector<ofVec3f> &verts = poly.getVertices();
     
     p.moveTo(verts[0].x, verts[0].y);
     
-    for (vector<ofVec3f>::iterator v = verts.begin()+1; v != verts.end(); ++v)
+    for (vector<ofVec3f>::const_iterator v = verts.begin()+1; v != verts.end(); ++v)
     {
         p.lineTo(v->x, v->y);
     }
@@ -101,7 +101,7 @@ void ofxShivaVGRenderer::draw(ofPolyline & poly)
     _vg.strokePath(p);
 }
 
-void ofxShivaVGRenderer::draw(ofPath &path)
+void ofxShivaVGRenderer::draw(ofPath &path) const
 {
     ofStyle style = ofGetStyle();
     
@@ -142,10 +142,12 @@ void ofxShivaVGRenderer::draw(ofPath &path)
         _vg.strokePath(p);
     }
     
-	if(path.getUseShapeColor()) setColor(prevColor);
+    if(path.getUseShapeColor()) glColor4f(prevColor.r/255.f,
+                                          prevColor.g/255.f,
+                                          prevColor.b/255.f, prevColor.a/255.f);
 }
 
-void ofxShivaVGRenderer::_doDrawPath(ofPath &path, simpleVGPath &p)
+void ofxShivaVGRenderer::_doDrawPath(ofPath &path, simpleVGPath &p) const
 {
     const vector<ofPath::Command> &commands = path.getCommands();
     
@@ -220,12 +222,12 @@ void ofxShivaVGRenderer::_doDrawPath(ofPath &path, simpleVGPath &p)
 }
 
 
-void ofxShivaVGRenderer::drawCircle(float x, float y, float z, float radius)
+void ofxShivaVGRenderer::drawCircle(float x, float y, float z, float radius) const
 {
     drawEllipse(x, y, z, radius*2, radius*2);
 }
 
-void ofxShivaVGRenderer::drawEllipse(float x, float y, float z, float width, float height)
+void ofxShivaVGRenderer::drawEllipse(float x, float y, float z, float width, float height) const
 {
     ofColor c = ofGetStyle().color;
     _vg.setFillColor(c.r, c.g, c.b, c.a);
@@ -235,19 +237,19 @@ void ofxShivaVGRenderer::drawEllipse(float x, float y, float z, float width, flo
     
     if (z != 0.0f)
     {
-    	pushMatrix();
-        translate(0, 0, z);
+        glPushMatrix();
+        glTranslatef(0, 0, z);
     }
     
     _vg.fillPath(p);
     
     if (z != 0.0f)
     {
-    	pushMatrix();
+        glPushMatrix();
     }
 }
 
-void ofxShivaVGRenderer::drawLine(float x1, float y1, float z1, float x2, float y2, float z2)
+void ofxShivaVGRenderer::drawLine(float x1, float y1, float z1, float x2, float y2, float z2) const
 {
     ofStyle style = ofGetStyle();
     
