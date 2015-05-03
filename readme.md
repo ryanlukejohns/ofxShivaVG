@@ -20,7 +20,7 @@ First, you **MUST** enable a stencil buffer in your ofProject. This is done by p
 
 
 ```c
-#include "testApp.h"
+#include "ofApp.h"
 #include "ofAppGlutWindow.h"
 
 //--------------------------------------------------------------
@@ -34,14 +34,14 @@ int main()
     
 	// set width, height, mode (OF_WINDOW or OF_FULLSCREEN)
 	ofSetupOpenGL(&window, 1024, 768, OF_WINDOW);
-	ofRunApp(new testApp()); // start the app
+	ofRunApp(new ofApp()); // start the app
 }
 ```
 
 Then switch to the ofxShivaRenderer in your setup method
 
 ```c
-void testApp::setup()
+void ofApp::setup()
 {
     _shivaVGRenderer = ofPtr<ofxShivaVGRenderer>(new ofxShivaVGRenderer);
     ofSetCurrentRenderer(_shivaVGRenderer);
