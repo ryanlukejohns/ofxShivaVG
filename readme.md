@@ -22,7 +22,7 @@ First, you need to include a `ofxShivaVGRenderer.h` header in `ofApp.h`:
 #include "ofxShivaVGRenderer.h"
 ```
 
-Then switch to the ofxShivaRenderer in your setup method
+Then switch to the ofxShivaVGRenderer in your `ofApp::setup` method of `ofApp.cpp`:
 
 ```cpp
 void ofApp::setup()
