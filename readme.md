@@ -1,50 +1,33 @@
 # ofxShivaVG
 
-*Important update! As of Aug. 5 2013 the master branch was rolled back to work with the latest official OF release. (0.7.4). The master branch will from now on always be kept in sync with the latest official release of OF. Check out the dev branch for a version working with the latest from the develop branch of OF (currently 0.8)*
-
 ##About
 
 ofxShivaVG is a 2d-renderer for openFrameworks based on the ShivaVG OpenVG implementation. It provides improved rendering quality of 2d paths/curves, polylines and shapes, with optional line capping/joining.
 
-Everything is rendered through openGL wich makes it much more performant than other cpu based 2d graphics libraries (Cairo, Quartz etc). It also makes it easy to render 2d and 3d graphics interchangeably.
+Everything is rendered through OpenGL wich makes it much more performant than other cpu based 2d graphics libraries (Cairo, Quartz etc). It also makes it easy to render 2d and 3d graphics interchangeably.
 
 ##Usage
 
-* Clone into openframeworks/addons
+* Clone into openFrameworks/addons
 * Add src & lib folders to your project
 
 ###Example
 
 
-First, you **MUST** enable a stencil buffer in your ofProject. This is done by passing in "stencil" as part of the glut display string. See example below:
+First, you need to include a `ofxShivaVGRenderer.h` header in `ofApp.h`:
 
 
-```c
-#include "ofApp.h"
-#include "ofAppGlutWindow.h"
-
-//--------------------------------------------------------------
-int main()
-{
-	ofAppGlutWindow window; // create a window
-	
-	// THIS IS THE IMPORTANT PART:
-    window.setGlutDisplayString("rgba alpha double stencil samples>=4");
-    
-    
-	// set width, height, mode (OF_WINDOW or OF_FULLSCREEN)
-	ofSetupOpenGL(&window, 1024, 768, OF_WINDOW);
-	ofRunApp(new ofApp()); // start the app
-}
+```cpp
+#include "ofMain.h"
+#include "ofxShivaVGRenderer.h"
 ```
 
 Then switch to the ofxShivaRenderer in your setup method
 
-```c
+```cpp
 void ofApp::setup()
 {
-    _shivaVGRenderer = ofPtr<ofxShivaVGRenderer>(new ofxShivaVGRenderer);
-    ofSetCurrentRenderer(_shivaVGRenderer);
+    ofSetCurrentRenderer(shared_ptr<ofxShivaVGRenderer>(new ofxShivaVGRenderer));
 }
 ```
 
