@@ -33,12 +33,12 @@ class ofxShivaVGRenderer : public ofGLRenderer
     
         ofxShivaVGRenderer();
     
-        void background(const ofColor & c) const;
-        void clear(float r, float g, float b, float a=0) const;
-        void clear(float brightness, float a=0) const;
+        void background(const ofColor & c);
+        void clear(float r, float g, float b, float a=0);
+        void clear(float brightness, float a=0);
 
         void draw(const ofPolyline & poly) const;
-        void draw(ofPath &path) const;
+        void draw(const ofPath & path) const;
         void drawCircle(float x, float y, float z,  float radius) const;
         void drawEllipse(float x, float y, float z, float width, float height) const;
         void drawLine(float x1, float y1, float z1, float x2, float y2, float z2) const;
@@ -47,18 +47,13 @@ class ofxShivaVGRenderer : public ofGLRenderer
         VGCapStyle getLineCapStyle() const;
         VGJoinStyle getLineJoinStyle() const;
     
-        bool rendersPathPrimitives() const
-        {
-                return true;
-        }
-    
     private:
     
         mutable simpleVGContext _vg;
         mutable deque<ofPoint> _curvePoints;
         mutable ofFloatColor _bgColor;
     
-        void _doDrawPath(ofPath &path, simpleVGPath &toPath) const;
+        void _doDrawPath(const ofPath & path, simpleVGPath & toPath) const;
     
 };
 

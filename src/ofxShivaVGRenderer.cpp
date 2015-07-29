@@ -26,7 +26,7 @@
 
 // TODO: Implement resize!
 
-ofxShivaVGRenderer::ofxShivaVGRenderer () : ofGLRenderer(ofGetWindowPtr())
+ofxShivaVGRenderer::ofxShivaVGRenderer() : ofGLRenderer(ofGetWindowPtr())
 {
    	_vg.create(ofGetWidth(), ofGetHeight());
 }
@@ -51,20 +51,20 @@ VGJoinStyle ofxShivaVGRenderer::getLineJoinStyle() const
     return _vg.getStrokeJoinStyle();
 }
 
-void ofxShivaVGRenderer::background(const ofColor & c) const
+void ofxShivaVGRenderer::background(const ofColor & c)
 {
     _bgColor = c;
 	glClearColor(_bgColor[0],_bgColor[1],_bgColor[2], _bgColor[3]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void ofxShivaVGRenderer::clear(float r, float g, float b, float a) const
+void ofxShivaVGRenderer::clear(float r, float g, float b, float a)
 {
 	glClearColor(r / 255., g / 255., b / 255., a / 255.);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void ofxShivaVGRenderer::clear(float brightness, float a) const
+void ofxShivaVGRenderer::clear(float brightness, float a)
 {
 	clear(brightness, brightness, brightness, a);
 }
@@ -101,7 +101,7 @@ void ofxShivaVGRenderer::draw(const ofPolyline & poly) const
     _vg.strokePath(p);
 }
 
-void ofxShivaVGRenderer::draw(ofPath &path) const
+void ofxShivaVGRenderer::draw(const ofPath & path) const
 {
     ofStyle style = ofGetStyle();
     
@@ -147,7 +147,7 @@ void ofxShivaVGRenderer::draw(ofPath &path) const
                                           prevColor.b/255.f, prevColor.a/255.f);
 }
 
-void ofxShivaVGRenderer::_doDrawPath(ofPath &path, simpleVGPath &p) const
+void ofxShivaVGRenderer::_doDrawPath(const ofPath & path, simpleVGPath & p) const
 {
     const vector<ofPath::Command> &commands = path.getCommands();
     
