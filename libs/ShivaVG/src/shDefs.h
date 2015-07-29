@@ -21,6 +21,23 @@
 #ifndef __SHDEFS_H
 #define __SHDEFS_H
 
+/* OpenGL headers */
+
+#if defined(__APPLE__)
+#  include <OpenGL/gl.h>
+#  include <OpenGL/glu.h>
+#elif defined(_WIN32)
+#  include <GL/gl.h>
+#  include <GL/glu.h>
+#else
+#  define GL_GLEXT_LEGACY /* don't include glext.h */
+#  include <GL/gl.h>
+#  include <GL/glu.h>
+#  include <GL/glx.h>
+#endif
+
+#include "shExtensions.h"
+
 /* Standard headers */
 
 #if defined(WIN32)
@@ -154,23 +171,5 @@ SHfloat getMaxFloat();
 
 #define SH_GRADIENT_TEX_SIZE       1024
 #define SH_GRADIENT_TEX_COORDSIZE   4096 /* 1024 * RGBA */
-
-/* OpenGL headers */
-
-#if defined(__APPLE__)
-#  include <OpenGL/gl.h>
-#  include <OpenGL/glu.h>
-#elif defined(_WIN32)
-#  include <GL/gl.h>
-#  include <GL/glu.h>
-#else
-#  define GL_GLEXT_LEGACY /* don't include glext.h */
-#  include <GL/gl.h>
-#  include <GL/glu.h>
-#  include <GL/glx.h>
-#endif
-
-#include "shExtensions.h"
-
 
 #endif /* __SHDEFS_H */
