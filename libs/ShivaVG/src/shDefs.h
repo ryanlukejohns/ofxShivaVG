@@ -50,7 +50,9 @@
 #include "../config.h"
 #
 #  if HAVE_INTTYPES_H
+ */
 #  include <inttypes.h>
+/*
 #  endif
 #
 #else
