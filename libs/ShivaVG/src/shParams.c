@@ -423,7 +423,7 @@ static void shSet(VGContext *context, VGParamType type, SHint count,
 }
 
 /*--------------------------------------------------
- * Sets a parameter of a single integer value
+ * Sets a parameter of a single float value
  *--------------------------------------------------*/
 
 VG_API_CALL void vgSetf (VGParamType type, VGfloat value)
@@ -441,7 +441,7 @@ VG_API_CALL void vgSetf (VGParamType type, VGfloat value)
 }
 
 /*--------------------------------------------------
- * Sets a parameter of a single float value
+ * Sets a parameter of a single integer value
  *--------------------------------------------------*/
 
 VG_API_CALL void vgSeti (VGParamType type, VGint value)

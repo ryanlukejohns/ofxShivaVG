@@ -26,28 +26,28 @@
 
 // TODO: Implement resize!
 
-ofxShivaVGRenderer::ofxShivaVGRenderer ()
-: ofGLRenderer(ofGetWindowPtr())
+ofxShivaVGRenderer::ofxShivaVGRenderer() : ofGLRenderer(ofGetWindowPtr())
+
 {
 	_vg.create(ofGetWidth(), ofGetHeight());
 }
 
-void ofxShivaVGRenderer::setLineCapStyle(VGCapStyle cap)
+void ofxShivaVGRenderer::setLineCapStyle(VGCapStyle cap) const
 {
     _vg.setStrokeCapStyle(cap);
 }
 
-void ofxShivaVGRenderer::setLineJoinStyle(VGJoinStyle join)
+void ofxShivaVGRenderer::setLineJoinStyle(VGJoinStyle join) const
 {
     _vg.setStrokeJoinStyle(join);
 }
 
-VGCapStyle ofxShivaVGRenderer::getLineCapStyle()
+VGCapStyle ofxShivaVGRenderer::getLineCapStyle() const
 {
     return _vg.getStrokeCapStyle();
 }
 
-VGJoinStyle ofxShivaVGRenderer::getLineJoinStyle()
+VGJoinStyle ofxShivaVGRenderer::getLineJoinStyle() const
 {
     return _vg.getStrokeJoinStyle();
 }
@@ -75,7 +75,7 @@ void ofxShivaVGRenderer::clear(float brightness, float a)
 // DRAWING
 // --------------------------------------------
 
-void ofxShivaVGRenderer::draw(ofPolyline & poly)
+void ofxShivaVGRenderer::draw(const ofPolyline & poly) const
 {
 	ofStyle style = ofGetStyle();
     
@@ -84,19 +84,16 @@ void ofxShivaVGRenderer::draw(ofPolyline & poly)
     _vg.setStrokeColor(c.r, c.g, c.b, c.a);
     
     simpleVGPath p;
+
+    const vector<glm::vec3> &verts = poly.getVertices();
     
-    vector<glm::vec3> &verts = poly.getVertices();
-	
-		if (verts.size() > 0)
-		{
-			p.moveTo(verts[0].x, verts[0].y);
-			
-			for (vector<glm::vec3>::iterator v = verts.begin()+1; v != verts.end(); ++v)
-			{
-				p.lineTo(v->x, v->y);
-			}
-		}
-	
+    p.moveTo(verts[0].x, verts[0].y);
+    
+    for (vector<glm::vec3>::const_iterator v = verts.begin()+1; v != verts.end(); ++v)
+    {
+        p.lineTo(v->x, v->y);
+    }
+
     if(poly.isClosed())
     {
         p.close();
@@ -105,7 +102,7 @@ void ofxShivaVGRenderer::draw(ofPolyline & poly)
     _vg.strokePath(p);
 }
 
-void ofxShivaVGRenderer::draw(ofPath &path)
+void ofxShivaVGRenderer::draw(const ofPath & path) const
 {
     ofStyle style = ofGetStyle();
     
@@ -146,10 +143,12 @@ void ofxShivaVGRenderer::draw(ofPath &path)
         _vg.strokePath(p);
     }
     
-	if(path.getUseShapeColor()) setColor(prevColor);
+    if(path.getUseShapeColor()) glColor4f(prevColor.r/255.f,
+                                          prevColor.g/255.f,
+                                          prevColor.b/255.f, prevColor.a/255.f);
 }
 
-void ofxShivaVGRenderer::_doDrawPath(ofPath &path, simpleVGPath &p)
+void ofxShivaVGRenderer::_doDrawPath(const ofPath & path, simpleVGPath & p) const
 {
 	
     const vector<ofPath::Command> &commands = path.getCommands();
@@ -225,12 +224,12 @@ void ofxShivaVGRenderer::_doDrawPath(ofPath &path, simpleVGPath &p)
 }
 
 
-void ofxShivaVGRenderer::drawCircle(float x, float y, float z, float radius)
+void ofxShivaVGRenderer::drawCircle(float x, float y, float z, float radius) const
 {
     drawEllipse(x, y, z, radius*2, radius*2);
 }
 
-void ofxShivaVGRenderer::drawEllipse(float x, float y, float z, float width, float height)
+void ofxShivaVGRenderer::drawEllipse(float x, float y, float z, float width, float height) const
 {
     ofColor c = ofGetStyle().color;
     _vg.setFillColor(c.r, c.g, c.b, c.a);
@@ -240,19 +239,19 @@ void ofxShivaVGRenderer::drawEllipse(float x, float y, float z, float width, flo
     
     if (z != 0.0f)
     {
-    	pushMatrix();
-        translate(0, 0, z);
+        glPushMatrix();
+        glTranslatef(0, 0, z);
     }
     
     _vg.fillPath(p);
     
     if (z != 0.0f)
     {
-    	pushMatrix();
+        glPushMatrix();
     }
 }
 
-void ofxShivaVGRenderer::drawLine(float x1, float y1, float z1, float x2, float y2, float z2)
+void ofxShivaVGRenderer::drawLine(float x1, float y1, float z1, float x2, float y2, float z2) const
 {
     ofStyle style = ofGetStyle();
     

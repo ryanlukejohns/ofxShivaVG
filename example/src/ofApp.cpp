@@ -106,8 +106,8 @@ void ofApp::draw()
     float y = s;
     
     ofSetColor(ofColor::fromHex(0xFF7B87));
-    ofDrawRectangle(x, y, w, w);
-    
+    ofDrawRectangle(x, y, 0, w, w);
+
     x += w + s;
     ofSetColor(ofColor::fromHex(0x475887));
     ofDrawCircle(x + w/2, y + w/2, w/2);
@@ -115,8 +115,8 @@ void ofApp::draw()
     x += w + s;
     ofSetColor(220, 222, 121);
     ofSetLineWidth(30.0f);
-	//_shivaVGRenderer->drawLine(x + s, y + s, 0.0, x + w - s, y + w - s, 0.0);
-		ofDrawLine(x + s, y + s, x + w - s, y + w - s);
+    ofDrawLine(x + s, y + s, x + w - s, y + w - s);
+
     
     x += w + s;
     ofSetColor(255, 232, 183);
