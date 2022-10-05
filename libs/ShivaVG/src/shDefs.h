@@ -45,7 +45,7 @@
 #endif
 
 /* Type definitions */
-
+/*
 #if defined(HAVE_CONFIG_H)
 #include "../config.h"
 #
@@ -54,7 +54,6 @@
 #  endif
 #
 #else
-/*
 #
 #  define int8_t    char
 #  define uint8_t   unsigned char
@@ -65,8 +64,8 @@
 #  define int64_t   long long
 #  define uint64_t  unsigned long long
 #
- */
 #endif
+*/
 
 typedef int8_t      SHint8;
 typedef uint8_t     SHuint8;
