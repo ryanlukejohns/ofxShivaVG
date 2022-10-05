@@ -54,6 +54,7 @@
 #  endif
 #
 #else
+/*
 #
 #  define int8_t    char
 #  define uint8_t   unsigned char
@@ -64,6 +65,7 @@
 #  define int64_t   long long
 #  define uint64_t  unsigned long long
 #
+ */
 #endif
 
 typedef int8_t      SHint8;
